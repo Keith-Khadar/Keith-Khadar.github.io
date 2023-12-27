@@ -22,11 +22,20 @@ export class ThreeBackgroundComponent implements AfterViewInit {
     this.renderer = new THREE.WebGLRenderer({canvas: this.canvasRef.nativeElement, antialias: true});
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
 
+    const texture = new THREE.TextureLoader().load('./assets/Cube_Texture.png');
+
+
     const geometry = new THREE.BoxGeometry(1,1,1);
-    const material = new THREE.MeshBasicMaterial( {color: 0x00ff00});
+    const material = new THREE.MeshStandardMaterial({
+      map:texture,
+    });
     this.cube = new THREE.Mesh( geometry, material);
     this.scene.add(this.cube);
     this.camera.position.z = 5;
+
+    //add light
+    const light = new THREE.AmbientLight(0x404040, 25);
+    this.scene.add(light);
 
     this.animate();
   }  
